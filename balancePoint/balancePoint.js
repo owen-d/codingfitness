@@ -15,6 +15,24 @@ ex//
 //and then run 'npm test' from the balancePoint folder.
 
 module.exports = function(array){
+  var sums = [];
+  var results = [];
+  for (var i = 0; i < array.length; i++) {
+    sums.push(sums.length ? sums[sums.length-1] + array[i] : array[i]);
+  }
+  var computeLeft = function(index){
+    return index === 0 ? 0 : sums[index-1];
+  };
+  var computeRight = function(index){
+    return sums[sums.length-1]-sums[index];
+  };
+
+  for (var i = 0; i < sums.length; i++) {
+    if (computeLeft(i) === computeRight(i)) {
+      results.push(i);
+    }
+  }
+  return results.length ? results : null;
 };
 
 
