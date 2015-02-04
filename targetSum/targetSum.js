@@ -10,4 +10,21 @@
 
 var targetSum = function(array, n){
   // Your code here
+  var best = null;
+  if (array.length < 2) {
+    return null;
+  }
+  for (var i = 0; i < array.length-1; i++) {
+    var first = array[i];
+    for (var j = i+1; j < array.length; j++) {
+      var second = array[j];
+      if (!best && first+second <= n) {
+        best = [first, second];
+      }
+      else if (best && n-first-second >= 0 && n-first-second < n-best[0]-best[1]) {
+        best = [first, second];
+      }
+    }
+  }
+  return best;
 }
