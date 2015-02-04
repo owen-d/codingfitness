@@ -4,4 +4,14 @@
 
 var isSquare = function(n){
   // Your code here
+  var cursor = 0;
+  while (cursor*cursor < n) {
+    cursor++;
+  }
+  if (cursor*cursor === n) {
+    return true;
+  } else {
+    return false;
+  }
+
 }
