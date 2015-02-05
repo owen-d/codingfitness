@@ -20,4 +20,33 @@
 
 var telegram = function(string, n){
   // Your code here
+  var strArray = string.split(' ');
+  strArray.forEach(function(item, index, array){
+    if (index !== array.length-1) {
+      array[index]+= " ";
+    }
+  });
+  var results = [];
+  strArray.reduce(function(prev, cur, index, array) {
+    if (index === strArray.length-1) {
+      if (prev.length + cur.length > n) {
+        results.push(prev);
+        results.push(cur);
+      } else {
+        results.push(prev+cur);
+      }
+      return;
+    }
+    console.log(prev, cur);
+    if (prev.length + cur.length > n) {
+      results.push(prev);
+      return cur;
+    } else {
+      // console.log(prev+cur);
+      return prev+cur;
+    }
+  });
+
+  console.log('result:', results);
+  return results;
 }
