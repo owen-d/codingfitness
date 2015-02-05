@@ -15,6 +15,7 @@ var charSetInString = function(chars, str){
   var strArray = str.split('');
   var q = [];
   var current = [];
+  var allLetters = false;
   var removeLeadingChars = function(char, array) {
     while(array[0] === char) {
       array.shift();
@@ -37,12 +38,23 @@ var charSetInString = function(chars, str){
     }
     return false;
   };
+  var allThere = function(charSet, array) {
+    var result = true;
+    charSet.forEach(function(item){
+      if (array.indexOf(item) === -1) {
+        result = false;
+      }
+    });
+    return result;
+  };
 
-  debugger;
   for (var i = 0; i < strArray.length; i++) {
     if (!current.length) {
       current.push(strArray[i]);
       q.push(strArray[i]);
+      if (allThere(chars, q)) {
+        allLetters = true;
+      }
     }
     else if (current.length && current[0] === strArray[i]) {
       removeLeadingChars(current[0], current);
@@ -50,24 +62,31 @@ var charSetInString = function(chars, str){
       q.push(strArray[i]);
       current.push(strArray[i]);
       var j = findMultiples(current[0], q);
-      var k = 0;
-      while (j && k < 10) {
+      while (j) {
         removeLeadingChars(current[0], current);
         q.shift();
         j = findMultiples(current[0], q);
-        k++;
       }
-      console.log('cur:', current, 'q:', q);
       leaveOneChar(current[0], current);
     } else {
       if (current[current.length-1] !== strArray[i]) {
         q.push(strArray[i]);
+        if (allThere(chars, q)) {
+          allLetters = true;
+        }
       }
       current.push(strArray[i]);
     }
+
+    console.log('i', i, 'cur:', current, 'q:', q);
+    if (allLetters && (shortest === undefined || shortest.length > current.length)) {
+      shortest = current.join('');
+    }
+
   }
 
-  return current;
+
+  return shortest;
 
 
 };
