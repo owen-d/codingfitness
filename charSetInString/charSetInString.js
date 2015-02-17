@@ -87,6 +87,4 @@ var charSetInString = function(chars, str){
 
 
   return shortest;
-
-
 };
