@@ -17,6 +17,23 @@
 
 
 
-var loneSurvivor = function(chairs, skip) {
+var loneSurvivor = function(chairs, skip, start) {
   //your code here
+  start = start || 0;
+  var pointer = start;
+  var jump = skip;
+  if (chairs.length === 1) {
+    return chairs[0];
+  } else {
+    // debugger;
+    while (jump > 0) {
+      pointer >= chairs.length-1 ? pointer = 0 : pointer++;
+      jump--;
+    }
+    chairs.splice(pointer, 1);
+    //reset pointer if it points out of bounds.
+    pointer === chairs.length ? pointer = 0 : void 0;
+    // console.log('chairs:', chairs, '\npointer:', pointer, 'nextSkip:', skip+1);
+    return loneSurvivor(chairs, skip+1, pointer);
+  }
 };
