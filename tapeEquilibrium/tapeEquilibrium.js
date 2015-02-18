@@ -33,4 +33,30 @@
 var tapeEquilibrium = function(array) {
  // code here
 
+ var min = Number.POSITIVE_INFINITY;
+ var sumsArray = [];
+ array.reduce(function(prev, cur){
+  sumsArray.push(prev+cur);
+  return prev+cur;
+ }, 0);
+
+ var sumLeft = function(index) {
+  return index === 0 ? Number.POSITIVE_INFINITY : sumsArray[index-1];
+ };
+ var sumRight = function(index) {
+  return index === 0 ? Number.POSITIVE_INFINITY : sumsArray[sumsArray.length - 1] - sumLeft(index);
+ };
+ var findAbs = function(index) {
+  return Math.abs(sumLeft(index) - sumRight(index));
+ };
+
+ sumsArray.forEach(function(item, index){
+  var current = findAbs(index);
+  if (current < min) {
+    min = current;
+  }
+ });
+
+ return min;
+
 };
