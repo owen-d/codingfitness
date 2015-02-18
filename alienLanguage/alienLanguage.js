@@ -39,4 +39,45 @@
 
 var numberWords = function (pattern, dictionary, L) {
   // Your code here.
+  var lnStack = [];
+  var count = 0;
+  var open = false;
+  var possibleWords = {};
+  var temp = '';
+  for (var i = 0; i < pattern.length; i++) {
+    if (!open) {
+      pattern[i] === '(' ? open = true : lnStack.push(pattern[i]);
+      temp = '';
+    } else {
+      if (pattern[i] === ')') {
+        lnStack.push(temp);
+        open = false;
+        temp = '';
+      } else {
+        temp+= pattern[i];
+      }
+    }
+  }
+  // console.log(lnStack);
+
+  var findCombinations = function(word, index){
+    if (word.length === lnStack.length) {
+      possibleWords[word] = true;
+    } else {
+      for (var i = 0; i < lnStack[index].length; i++) {
+        findCombinations(word+lnStack[index][i], index+1);
+      }
+    }
+  };
+
+  findCombinations('', 0);
+
+  for (var word in possibleWords) {
+    if (dictionary.indexOf(word) !== -1) {
+      count++;
+    }
+  }
+
+  return count;
+
 }
