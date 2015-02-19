@@ -37,8 +37,8 @@ var telegram = function(string, n){
       }
       return;
     }
-    console.log(prev, cur);
-    if (prev.length + cur.length > n) {
+    // console.log(prev, cur);
+    if (prev.length + cur.length > n+1) {
       results.push(prev);
       return cur;
     } else {
@@ -47,6 +47,20 @@ var telegram = function(string, n){
     }
   });
 
+  var trim = function(string){
+    if (string[0] === ' ') {
+      string = string.substr(1);
+    }
+    if (string[string.length-1] === ' ') {
+      string = string.substr(0, string.length-1);
+    }
+
+    return string;
+  };
+
+  results.forEach(function(item, index, array){
+    array[index] = trim(item);
+  });
   console.log('result:', results);
   return results;
 }
